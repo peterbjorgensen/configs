@@ -48,6 +48,7 @@ alias flub='woof'
 alias ltcrop='~/.scripts/ltcrop.sh'
 alias gta2='~/.scripts/gta2.sh'
 alias aaussh='ssh pejor@skoda.es.aau.dk -X'
+alias lundssh='ssh guest@lundgaard.dyndns.dk'
 alias hdapsfixx='~/.scripts/hdaps.sh'
 alias latexmkrapport="ls *.latexmain | xargs latexmk -pdf -pvc -silent"
 alias ise='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/ise'
