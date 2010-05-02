@@ -7,13 +7,13 @@ set guifont=Monospace\ 8
 set hlsearch
 set guioptions-=T
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
+set backupdir=~/.vim/backup "backup dir
+set incsearch "start searching as you type
 
 let g:mapleader = '½'
 let g:maplocalleader = '½'
 
 set grepprg=egrep\ -nH\ $*
-
-
 let g:tex_flavor='latex'
 let g:Tex_FormatDependency = 'pdf'
 let g:Tex_Leader = '<'
@@ -30,6 +30,7 @@ let g:Tex_UseMakefile = 0
 "setlocal spell spelllang=da
 let spell_auto_type="tex,doc,mail"
 
+"General mappings
 nnoremap æ :cprev<CR>
 nnoremap ø :cnext<CR>
 nnoremap å :cclose<CR>
@@ -55,9 +56,10 @@ set wildmenu "better menu completion
 set wildmode=list:longest
 set tabstop=4
 "au setlocal expandtab "dont use tabs
-au BufRead,BufNewFile *.py setlocal setlocal expandtab
+au BufRead,BufNewFile *.py setlocal expandtab
 set smartindent
-set smartcase
+set ignorecase
+set smartcase "Dont ignorecase when upper case is used
 set shiftwidth=4
 set scrolloff=4
 
@@ -89,19 +91,125 @@ else
     highlight SpellLocal term=underline cterm=underline
 endif
 
-"ctags
-au BufWritePost *.cpp,*.h,*.c,*.rl,*.def call system("ctags -a  -f ~/.vim/tags/local/ctags --extra=+q --fields=+iaS --c++kinds=+pl -I" . expand("%:p"))
-au BufWritePost *.rb call system("ctags -a -f ~/.vim/tags/local/rbtags --extra=+q " . expand("%:p"))
-au BufWritePost *.py call system("ctags -a -f ~/.vim/tags/local/pytags --extra=+q " . expand("%:p"))
-au BufWritePost *.java call system("ctags -a -f ~/.vim/tags/local/javatags --extra=+q " . expand("%:p"))
+"Quckfix window size
+au FileType qf call AdjustWindowHeight(3, 8)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
 
-au BufRead,BufNewFile *.rb setlocal tags+=~/.vim/tags/local/rbtags,~/.vim/tags/linux/rbtags
-au BufRead,BufNewFile *.cpp,*.h,*.c setlocal tags+=~/.vim/tags/local/ctags,~/.vim/tags/linux/ctags
-au BufRead,BufNewFile *.rl,*.def setlocal tags+=~/.vim/tags/local/ctags,~/.vim/tags/linux/ctags
-au BufRead,BufNewFile *.py setlocal tags+=~/.vim/tags/local/pytags,~/.vim/tags/linux/pytags
-au BufRead,BufNewFile *.java setlocal tags+=~/.vim/tags/local/javatags,~/.vim/tags/linux/javatags
+" ***Kaspers Ctags support***
+" where is the tag file located. the semicolon makes it look in parent
+" directories
+autocmd Filetype c,tex map <F8> :call GenerateTagFile()<CR>
+autocmd BufEnter *.c,*.tex silent :call SetTagFile()
+inoremap <F6> <Esc>:call PreviewPrototype()<CR>a
+inoremap ) )<C-r>=ClosingParanthesis()<CR><BS>
+nnoremap T :TlistToggle<CR>
+let Tlist_Compact_Format = 1
+set tags+=TAGS;,tags;
 
-set tags+=./.tags;${HOME}
+function! SetTagFile()
+    let l:currdir = getcwd()
+    let g:tagdir = ""
 
-"backup dir
-set backupdir=~/.vim/backup
+    " use findfile("tags", ". getcwd(). "; ") instead
+    while !filereadable("tags") && getcwd() != "/"
+        cd ..
+    endwhile
+
+    if filereadable("tags")
+        execute "set tags=" . getcwd() . "/tags"
+        let g:tagdir = getcwd()
+    endif
+    
+    echo "tagdir: " . g:tagdir
+    execute "cd " . l:currdir
+endfunction
+
+function GenerateTagFile()
+    if g:tagdir == ""
+        while 1
+            "call inputsave()
+            let g:tagdir = input("Tag dir: ",".","dir")
+            "call inputrestore()
+            if isdirectory(g:tagdir) 
+                break
+            endif
+            echo g:tagdir . " is not a directory\n"
+        endwhile
+    endif
+    echo "ctags -R -f ". g:tagdir ."/tags --c++-kinds=+p --fields=+iaS --extra=+q " . g:tagdir
+    execute "set tags=".g:tagdir."/tags"
+    call system("ctags -R -f ". g:tagdir ."/tags --c++-kinds=+p --fields=+iaS --extra=+q " . g:tagdir)
+endfunction
+
+" returns 0 if function was complete and 1 else
+function IsFuncComplete(str,pos)
+    let l:level = 0
+    let l:pos = match(a:str, "[()]", a:pos)
+    
+    while l:pos >= 0
+        if a:str[l:pos] == '('
+            let l:level = l:level + 1
+        elseif a:str[l:pos] == ')'
+            let l:level = l:level - 1
+        endif
+        if l:level == 0
+            break
+        endif
+        let l:pos = match(a:str, "[()]", l:pos+1)
+    endwhile
+    return l:level
+endfunction
+
+" get the name of the current open function
+function GetCurrentFunction()
+    let currline = getline(".")
+    let subline = strpart(currline, 0, col(".")) 
+    
+    " start from the cursor
+    let l:pos = len(subline)
+    let l:complete = 0
+    
+    while l:complete == 0 || l:funcstart == -1
+        " match last left paranthesis before l:pos
+        let l:end = match(strpart(subline,0,l:pos+1),  "([^(]*$")
+        if l:end < 1
+            return ""
+        endif
+        
+        " match the last function name before the left paranthesis
+        let l:funcstart = match(strpart(subline, 0,l:end+1), "[a-zA-Z][^ \t()]*[ \t]*([^(]*$")
+        if l:funcstart != -1
+            let l:complete = IsFuncComplete(subline, l:funcstart)
+            let l:pos = l:funcstart
+        else
+            let l:pos = l:end - 1
+            let l:complete = 1
+        endif
+    endwhile
+    " extract function name
+    let l:funcstr = matchstr(strpart(subline, 0, l:end+1),"[a-zA-Z][^ \t()]*[ \t]*([^(]*$")
+    return strpart(l:funcstr,0,len(l:funcstr)-1)
+endfunction
+
+let g:func = ""
+
+function ClosingParanthesis()
+    let l:func = GetCurrentFunction()
+    if l:func != g:func
+        wincmd z
+    endif
+endfunction
+
+function PreviewPrototype()
+    " don't do this if inside a preview window
+    if &previewwindow
+        return
+    endif   
+    let g:func = GetCurrentFunction()
+    if g:func != ""
+        silent! execute ":ptag ".g:func
+    endif
+endfunction
+
