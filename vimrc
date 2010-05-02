@@ -13,18 +13,6 @@ set incsearch "start searching as you type
 let g:mapleader = '½'
 let g:maplocalleader = '½'
 
-set grepprg=egrep\ -nH\ $*
-let g:tex_flavor='latex'
-let g:Tex_FormatDependency = 'pdf'
-let g:Tex_Leader = '<'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_pdf = 'make figs && make figs && latexmk -pdf $*'
-"let g:Tex_CompileRule_pdf = 'pdflatex --synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_MultipleCompileFormats = 'pdf'
-"let g:Tex_ViewRule_pdf = 'evince'
-let g:Tex_GotoError = 0
-let g:Tex_UseMakefile = 0
-
 "set spell
 "setlocal spell spelllang=en_us
 "setlocal spell spelllang=da
@@ -68,7 +56,7 @@ let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 let g:pydiction_location = '/usr/share/pydiction/complete-dict'
 "let g:SuperTabLongestHighlight=1
-set completeopt=menu,longest
+set completeopt=menu,longest,preview
 
 
 "more info for statusline
@@ -97,7 +85,106 @@ function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
-" ***Kaspers Ctags support***
+"""""""""""""""""""""""""
+"""""""" LATEX options
+"""""""""""""""""""""""""
+set grepprg=egrep\ -nH\ $*
+let g:tex_flavor='latex'
+let g:Tex_FormatDependency = 'pdf'
+let g:Tex_Leader = '<'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_CompileRule_pdf = 'make figs && make figs && latexmk -pdf $*'
+"let g:Tex_CompileRule_pdf = 'pdflatex --synctex=1 -interaction=nonstopmode $*'
+"let g:Tex_MultipleCompileFormats = 'pdf'
+"let g:Tex_ViewRule_pdf = 'evince'
+let g:Tex_GotoError = 0
+let g:Tex_UseMakefile = 0
+
+autocmd BufRead,BufNewFile	*.tex	setlocal filetype=tex
+autocmd BufEnter main.tex setlocal filetype=tex
+autocmd BufReadPost main.aux setlocal nobuflisted
+autocmd BufReadPost main.log setlocal nobuflisted
+
+autocmd FileType tex call Autocmd_Tex()
+function Autocmd_Tex()
+	set fileencoding=latin1
+	setlocal spell spelllang=da
+	setlocal textwidth=80
+	nmap <F3> <Leader>ll<CR>
+	nmap <F4> :call Tex_SynctexSearch()<CR>
+	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')
+	call IMAP('HSS', '_|<++>|<++>','tex')
+	call IMAP('||', '|<++>|<++>','tex')
+endfunction
+
+"environment macros
+let g:Tex_PromptedEnvironments = "flalign,flalign*,figure,minipage,table,tabular,enumerate,itemize"
+let g:Tex_Env_figure = "\
+\\begin{figure}[htbp]\<CR>\
+	\\centering\\includegraphics[width=<++>\\textwidth]{pics/<++>}\<CR>\
+	\\caption{<++>}\<CR>\
+	\\label{fig:<++>}\<CR>\
+\\end{figure}\<CR><++>"
+let g:Tex_Env_minipage = "\
+\\begin{figure}[htbp]\<CR>\
+    \\centering\<CR>\
+    \\begin{minipage}[c]{0.47\\textwidth}\<CR>\
+		\\centering\<CR>\
+		\\includegraphics[width=1\\textwidth]{pics/<++>}\<CR>\
+        \\caption{<++>}\<CR>\
+        \\label{fig:<++>}\<CR>\
+	\\end{minipage}\\hfill\<CR>\
+	\\begin{minipage}[c]{0.47\\textwidth}\<CR>\
+		\\centering\<CR>\
+		\\includegraphics[width=1\\textwidth]{pics/<++>}\<CR>\
+        \\caption{<++>}\<CR>\
+		\\label{fig:<++>}\<CR>\
+    \\end{minipage}\<CR>\
+\\end{figure}\<CR><++>"
+
+function! Tex_SynctexSearch()
+    if &ft != 'tex'
+        echo "calling Tex_SynctexSearch from a non-tex file"
+        return
+    end
+
+    let curd = getcwd()
+    let xpos = col('.')
+    let ypos = line('.')
+
+    if exists('b:fragmentFile')
+        let mainfname = expand('%:p:t')
+        call Tex_CD(expand('%:p:h'))
+    else
+        let mainfname = Tex_GetMainFileName(':p:t')
+        call Tex_CD(Tex_GetMainFileName(':p:h'))
+    end
+
+    let targetfile = expand('%')
+    let pdffile = substitute(mainfname,'.tex','.pdf','')
+    "echo pdffile
+
+    let iopt = '"' . ypos . ':' . xpos . ':' . targetfile . '"'
+    let xopt = shellescape("echo %{page+1}:%{h}:%{v}:%{width}:%{height}",1)
+    let shellline = 'synctex view -i ' . iopt . ' -o ' . pdffile . ' -x ' . xopt
+    let result = system(shellline)
+    let rslt = split(result,':')
+    if len(rslt) == 5
+        "Synctex succeed
+        let page = remove(rslt,0)
+        let evrectopt = '"' . get(rslt,0) . ':' . get(rslt,1) . ':' . get(rslt,2) . ':' . '1' . '"'
+        echo 'SyncteX succeeded, launching evince'
+        execute 'silent ! nohup evince --use-absolute-page --page-label ' . page . ' --highlight-rect ' . evrectopt . ' ' . pdffile . ' >/dev/null &'
+    else
+        "Synctex failed
+        echo 'SyncteX failed, viewing without synctex'
+        execute 'silent ! nohup evince ' . pdffile . ' >/dev/null &'
+    end
+endfunction
+
+""""""""""""""""""""""""""""""""""""
+"""""""""""""" Kaspers Ctags support
+""""""""""""""""""""""""""""""""
 " where is the tag file located. the semicolon makes it look in parent
 " directories
 autocmd Filetype c,tex map <F8> :call GenerateTagFile()<CR>
