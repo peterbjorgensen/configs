@@ -76,6 +76,7 @@ if has("statusline")
 endif
 
 if has("gui_running")
+	set columns=81
 else
     "better highlighting for spell checker in console vim
     highlight clear SpellBad
