@@ -1,9 +1,11 @@
 filetype plugin on
 filetype indent on
 syntax on
-source /usr/share/vim/plugin/comments.vim
+source /usr/share/vimfiles/plugin/comments.vim
 colorscheme darkZ
-set guifont=Monospace\ 8
+if hostname() == "archpad" "smaller font for laptop
+	set guifont=Monospace\ 8
+endif
 set hlsearch
 set guioptions-=T
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
@@ -32,10 +34,6 @@ let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplModSelTarget = 1 
 "let g:miniBufExplForceSyntaxEnable = 1
 let g:miniBufExplTabWrap = 1
-"hi MBEChanged guibg=white guifg=red ctermbg=darkblue 
-"hi MBENormal  guibg=white guifg=black ctermbg=darkblue
-"hi MBEVisibleNormal guibg=darkblue guifg=blue ctermbg=darkblue
-"hi MBEVisibleChanged guibg=darkblue guifg=red ctermbg=darkblue 
 hi MBEChanged guifg=red ctermbg=darkblue 
 hi MBEVisibleNormal guifg=blue ctermbg=darkblue
 hi MBEVisibleChanged guifg=red ctermbg=darkblue 
@@ -43,8 +41,6 @@ hi MBEVisibleChanged guifg=red ctermbg=darkblue
 set wildmenu "better menu completion
 set wildmode=list:longest
 set tabstop=4
-"au setlocal expandtab "dont use tabs
-au BufRead,BufNewFile *.py setlocal expandtab
 set smartindent
 set ignorecase
 set smartcase "Dont ignorecase when upper case is used
@@ -54,7 +50,6 @@ set scrolloff=4
 "supertab completion
 let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:pydiction_location = '/usr/share/pydiction/complete-dict'
 "let g:SuperTabLongestHighlight=1
 set completeopt=menu,longest,preview
 
@@ -83,6 +78,45 @@ endif
 au FileType qf call AdjustWindowHeight(3, 8)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+"""""""""""""""""""""""""
+""""""""Python specific
+""""""""""""""""""""""""
+autocmd FileType python call Autocmd_Python()
+
+let g:pydiction_location = '/usr/share/pydiction/complete-dict'
+
+function! Autocmd_Python()
+	setlocal expandtab
+	source /usr/share/vim/plugin/ropevim.vim
+	"ropevim settings
+	let g:ropevim_codeassist_maxfixes=10
+	let g:ropevim_guess_project=1
+	let g:ropevim_vim_completion=1
+	let g:ropevim_enable_autoimport=1
+	let g:ropevim_extended_complete=1
+endfunction
+
+function! CustomCodeAssistInsertMode()
+    call RopeCodeAssistInsertMode()
+    if pumvisible()
+        return "\<C-L>\<Down>"
+    else
+        return ''
+    endif
+endfunction
+
+function! TabWrapperComplete()
+    let cursyn = synID(line('.'), col('.') - 1, 1)
+    if pumvisible()
+        return "\<C-Y>"
+    endif
+    if strpart(getline('.'), 0, col('.')-1) =~ '^\s*$' || cursyn != 0
+        return "\<Tab>"
+    else
+        return "\<C-R>=CustomCodeAssistInsertMode()\<CR>"
+    endif
 endfunction
 
 """""""""""""""""""""""""
