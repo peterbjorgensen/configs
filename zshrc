@@ -19,6 +19,7 @@ setopt hist_save_no_dups
 setopt share_history
 
 #### Completion
+zstyle ':completion:*' rehash yes #always rehash external commands
 zstyle ':completion:*' menu select #arrow key-driven completion
 # allow approximate completion
 zstyle ':completion:*' completer _complete _match _approximate
