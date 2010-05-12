@@ -7,10 +7,12 @@ if hostname() == "archpad" "smaller font for laptop
 	set guifont=Monospace\ 8
 endif
 set hlsearch
+set guioptions-=m
 set guioptions-=T
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
 set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
+set showcmd "show the number of bytes marked in visual mode
 
 let g:mapleader = '½'
 let g:maplocalleader = '½'
@@ -25,6 +27,8 @@ nnoremap æ :cprev<CR>
 nnoremap ø :cnext<CR>
 nnoremap å :cclose<CR>
 noremap <C-q> <Esc>:confirm bd<CR>
+noremap ŋ 
+noremap ç 
 
 "minibufexplorer settings
 let g:miniBufExplMapWindowNavVim = 1
@@ -48,10 +52,10 @@ set shiftwidth=4
 set scrolloff=4
 
 "supertab completion
-let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 "let g:SuperTabLongestHighlight=1
-set completeopt=menu,longest,preview
+set completeopt=menu,longest
 
 
 "more info for statusline
@@ -196,7 +200,6 @@ function! Tex_SynctexSearch()
 
     let targetfile = expand('%')
     let pdffile = substitute(mainfname,'.tex','.pdf','')
-    "echo pdffile
 
     let iopt = '"' . ypos . ':' . xpos . ':' . targetfile . '"'
     let xopt = shellescape("echo %{page+1}:%{h}:%{v}:%{width}:%{height}",1)
