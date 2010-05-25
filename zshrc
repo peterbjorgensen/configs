@@ -21,6 +21,7 @@ setopt share_history
 #### Completion
 zstyle ':completion:*' rehash yes #always rehash external commands
 zstyle ':completion:*' menu select #arrow key-driven completion
+zstyle ':completion:*' special-dirs true	# allow cd ..
 # allow approximate completion
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
@@ -28,6 +29,12 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 #case-insensitive
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
+#Set terminal title to current working dir
+#everytime prompt is shown
+case $TERM in
+	    xterm*)
+	precmd () {print -Pn "\e]0; %~\a"}
+esac
 
 #Environment variables
 export OOO_FORCE_DESKTOP=gnome

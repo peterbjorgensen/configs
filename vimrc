@@ -211,8 +211,9 @@ function! Tex_SynctexSearch()
         let page = remove(rslt,0)
         let evrectopt = '"' . get(rslt,0) . ':' . get(rslt,1) . ':' . get(rslt,2) . ':' . '1' . '"'
         echo 'SyncteX succeeded, launching evince'
-        execute 'silent ! nohup evince --use-absolute-page --page-label ' . page . ' --highlight-rect ' . evrectopt . ' ' . pdffile . ' >/dev/null &'
-    else
+        "execute 'silent ! nohup evince --use-absolute-page --page-label ' . page . ' --highlight-rect ' . evrectopt . ' ' . pdffile . ' >/dev/null &'
+        execute 'silent ! nohup evince ' . pdffile . ' >/dev/null &'
+	else
         "Synctex failed
         echo 'SyncteX failed, viewing without synctex'
         execute 'silent ! nohup evince ' . pdffile . ' >/dev/null &'

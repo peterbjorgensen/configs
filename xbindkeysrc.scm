@@ -3,7 +3,7 @@
 (xbindkey '(XF86AudioMute) "amixer -c 0 set Master playback toggle" )
 (xbindkey '(XF86AudioLowerVolume) "amixer -c 0 set Master playback 2-" )
 (xbindkey '(XF86AudioRaiseVolume) "amixer -c 0 set Master playback 2+" )
-(xbindkey '(Control Alt Delete) "slock")
+(xbindkey '(Control Alt Delete) "bash -c 'xtrlock'")
 (xbindkey '(Mod4 F4) "xfce4-session-logout")
 (xbindkey '(Alt F2) "gmrun")
 (xbindkey '(F12) "wmctrl -v -xr terminator -b toggle,hidden 2>&1 | awk '{if ($1==\"Using\") print $3;}' | xargs xwininfo -id | grep -q IsViewable && wmctrl -xa terminator ")
