@@ -18,8 +18,6 @@ let g:mapleader = '½'
 let g:maplocalleader = '½'
 
 "set spell
-"setlocal spell spelllang=en_us
-"setlocal spell spelllang=da
 let spell_auto_type="tex,doc,mail"
 
 "General mappings
@@ -27,7 +25,11 @@ nnoremap æ :cprev<CR>
 nnoremap ø :cnext<CR>
 nnoremap å :cclose<CR>
 noremap <C-q> <Esc>:confirm bd<CR>
-noremap ŋ 
+"alt-a decrease number under cursor
+nnoremap ª :normal! <C-x><CR>
+nnoremap á :normal! <C-x><CR>
+"alt-g
+noremap ŋ  
 noremap ç 
 
 "minibufexplorer settings
