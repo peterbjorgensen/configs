@@ -1,0 +1,11 @@
+nnoremap ø gt
+nnoremap æ gT
+nnoremap Ø ]
+nnoremap Æ [
+nnoremap x <C-d>
+nnoremap c <C-u>
+nnoremap <BS> H
+set guioptions+=N
+set cpt=lbS
+set showstatuslinks=2
+set wildoptions=auto
