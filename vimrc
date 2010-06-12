@@ -5,10 +5,14 @@ source /usr/share/vimfiles/plugin/comments.vim
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
 	set guifont=Monospace\ 8
+else
+	set mouse=a
+	set ttymouse=xterm2 "for scrolling with urxvt
 endif
 set hlsearch
 set guioptions-=m
 set guioptions-=T
+set guioptions+=c "show simple dialogs in commandline
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
 set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
@@ -95,7 +99,7 @@ let g:pydiction_location = '/usr/share/pydiction/complete-dict'
 
 function! Autocmd_Python()
 	setlocal expandtab
-	source /usr/share/vim/plugin/ropevim.vim
+	source /usr/share/vim/vimfiles/plugin/ropevim.vim
 	"ropevim settings
 	let g:ropevim_codeassist_maxfixes=10
 	let g:ropevim_guess_project=1

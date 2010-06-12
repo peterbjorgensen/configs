@@ -32,7 +32,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 #Set terminal title to current working dir
 #everytime prompt is shown
 case $TERM in
-	    xterm*)
+	    xterm*|*rxvt*)
 	precmd () {print -Pn "\e]0; %~\a"}
 esac
 

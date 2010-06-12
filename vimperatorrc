@@ -1,11 +1,15 @@
 nnoremap ø gt
 nnoremap æ gT
-nnoremap Ø ]
-nnoremap Æ [
-nnoremap x <C-d>
-nnoremap c <C-u>
+nnoremap Ø ]]
+nnoremap Æ [[
+nnoremap K 12k
+nnoremap J 12j
+nnoremap x 12j
+nnoremap c 12k
 nnoremap <BS> H
 set guioptions+=N
 set cpt=lbS
 set showstatuslinks=2
 set wildoptions=auto
+set nextpattern=\\bnæste\\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
+set previouspattern=\\bprev|previousi|forrige\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
