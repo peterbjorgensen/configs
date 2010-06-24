@@ -36,6 +36,15 @@ nnoremap á :normal! <C-x><CR>
 noremap ŋ  
 noremap ç 
 
+"Cursor change color in console vim when entering/leaving insert mode
+if &term =~ "xterm"
+	"Set the cursor white in cmd-mode and orange in insert mode
+	let &t_EI = "\<Esc>]12;green\x9c"
+	let &t_SI = "\<Esc>]12;orange\x9c"
+	"We normally start in cmd-mode
+	silent !echo -e "\e]12;green\x9c"
+endif
+
 "minibufexplorer settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
