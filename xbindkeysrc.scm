@@ -26,7 +26,10 @@
 
 ;; Bottom row
 (xbindkey '(Mod4 v) "bash -c 'wmctrl -xa vim || gvim'")
-(xbindkey '(Mod4 c) "bash -c 'wmctrl -xa xmms || xmms'")
+(xbindkey '(Mod4 b) "bash -c 'cmus-remote --next")
+(xbindkey '(Mod4 z) "bash -c 'cmus-remote --prev")
+(xbindkey '(Mod4 x) "bash -c 'cmus-remote --stop")
+(xbindkey '(Mod4 c) "bash -c 'cmus-remote --pause'")
 
 ;; Move/resize windows
 ;(xbindkey '(Shift Mod4 i) "wmctrl -r ':ACTIVE:' -e '0,0,0,668,996'")
