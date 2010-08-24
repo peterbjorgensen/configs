@@ -1,0 +1,80 @@
+MODKEY=Mod4
+
+# Colors tuples: "<text> <background> <border>"
+export WMII_NORMCOLORS='#888888 #222222 #333333'
+export WMII_FOCUSCOLORS='#ffffff #285577 #4c7899'
+export WMII_FOCUSCOLORS_FLOATING='#ffffff #852E38 #E04E5E'
+
+export WMII_TERM="urxvt"
+
+# Status bars
+# (functions called by the 'status' action)
+removeStatusBars() {
+    for i in $(wmiir ls /rbar); do
+        if [ "/rbar/$i" != "$noticebar" ]; then 
+            wmiir remove /rbar/$i
+        fi
+    done
+}
+
+createStatusBars() {
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/90time
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/80conky
+}
+
+updateStatusBars() {
+    echo -n $(date +'week %V %a %b %d %R') | wmiir write /rbar/90time
+	awk '{printf "UP: %8s | DOWN: %8s | MEM:%3s | CPU:%3s | SWAP:%3s | %s %s %s | PROC:%s | FS:%s", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10}' /home/peter/.conky2wmii | wmiir write /rbar/80conky
+}
+
+### Events
+local_events() {
+	cat <<'!'
+
+Event AreaFocus
+	if [ $1 = "~" ]; then
+		wmiir xwrite /ctl focuscolors $WMII_FOCUSCOLORS_FLOATING
+	else
+		wmiir xwrite /ctl focuscolors $WMII_FOCUSCOLORS
+	fi
+
+# Key bindings
+#Resizing
+Key $MODKEY-Control-$LEFT
+	wmiir xwrite /tag/sel/ctl grow sel sel right -5
+Key $MODKEY-Control-$RIGHT
+	wmiir xwrite /tag/sel/ctl grow sel sel right 5
+Key $MODKEY-Control-$DOWN
+	wmiir xwrite /tag/sel/ctl grow sel sel down 5
+Key $MODKEY-Control-$UP
+	wmiir xwrite /tag/sel/ctl grow sel sel down -5
+
+Key $MODKEY-g # Toggle selected client's fullsceen state
+	wmiir xwrite /client/sel/ctl Fullscreen toggle
+
+# Actions
+Action shutdown
+	sudo shutdown -h now
+Action reboot
+	sudo reboot
+Action suspend
+	sudo pm-suspend
+Action status
+    set +xv
+    if removeStatusBars 2>/dev/null; then
+        true
+    fi
+    createStatusBars
+    while updateStatusBars; do
+            sleep 1
+    done
+
+!
+}
+
+#Autostart apps
+wihack -tags /.*/ kupfer >/dev/null &
+wihack -tags 0 urxvt -e cmus &
+wihack -tags 0 pidgin >/dev/null &
+mkfifo /home/peter/.conky2wmii &
+conky &
