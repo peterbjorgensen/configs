@@ -20,17 +20,41 @@ removeStatusBars() {
 createStatusBars() {
     echo "$WMII_NORMCOLORS" | wmiir create /rbar/90time
     echo "$WMII_NORMCOLORS" | wmiir create /rbar/80conky
+    echo "$WMII_NORMCOLORS" | wmiir create /rbar/70weather
+    echo "$WMII_NORMCOLORS" | wmiir create /lbar/cmus
 }
 
 updateStatusBars() {
     echo -n $(date +'week %V %a %b %d %R') | wmiir write /rbar/90time
 	awk '{printf "UP: %8s | DOWN: %8s | MEM:%3s | CPU:%3s | SWAP:%3s | %s %s %s | PROC:%s | FS:%s", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10}' /home/peter/.conky2wmii | wmiir write /rbar/80conky
+
+	#Update CMUS status
+	CMUS=`cmus-remote -Q 2>/dev/null` 
+	if printf "%b\n" "$CMUS" | grep -q '^status paused'; then
+		STATUS='|'
+	elif printf "%b\n" "$CMUS" | grep -q '^status stopped'; then
+		STATUS='#'
+	elif printf "%b\n" "$CMUS" | grep -q '^status playing'; then
+		STATUS='>'
+	fi
+	if printf "%b\n" "$CMUS" | grep -q '^tag artist'; then
+		echo -n 'CMUS:' $STATUS $(printf " %b\n" "$CMUS" | grep '^tag artist' | cut -c 12-) ' - '  $(printf "%b\n" "$CMUS" | grep '^tag title' | cut -c 11-) | wmiir write /lbar/cmus
+	elif printf "%b\n" "$CMUS" | grep -q '^file'; then
+		echo -n 'CMUS:' $STATUS $(printf " %b\n" "$CMUS" | grep '^file' | grep -o -E '[^/]*$') | wmiir write /lbar/cmus
+	else
+		echo -n 'CMUS: Not running' | wmiir write /lbar/cmus
+	fi
+}
+
+updateWeatherBar() {
+	curl --silent --connect-timeout 30 "http://xml.weather.yahoo.com/forecastrss?p=DAXX0002&u=c"| sed -n -e '/F<BR\|Low/!d; s/<.*>//;1,1 p;'| wmiir write /rbar/70weather
 }
 
 ### Events
 local_events() {
 	cat <<'!'
 
+# Make floating windows other color
 Event AreaFocus
 	if [ $1 = "~" ]; then
 		wmiir xwrite /ctl focuscolors $WMII_FOCUSCOLORS_FLOATING
@@ -52,6 +76,19 @@ Key $MODKEY-Control-$UP
 Key $MODKEY-g # Toggle selected client's fullsceen state
 	wmiir xwrite /client/sel/ctl Fullscreen toggle
 
+# Redefine unresponsive event
+Event Unresponsive
+	{
+		client=$1; shift
+		msg="The following client is not responding. What would you like to do?$wi_newline"
+		resp=$(wihack -transient $client \
+			      gxmessage -nearmouse -buttons _Kill,_Wait -print \
+			      -fn "${WMII_FONT%%,*}" "$msg $(wmiir read /client/sel/label)")
+		if [ "$resp" = _Kill ]; then
+			wmiir xwrite /client/$client/ctl slay &
+		fi
+	}&
+
 # Actions
 Action shutdown
 	sudo shutdown -h now
@@ -65,16 +102,37 @@ Action status
         true
     fi
     createStatusBars
+	COUNTER=0
     while updateStatusBars; do
-            sleep 1
+            sleep 0.5
+			if [ $COUNTER -lt 1 ]; then
+				updateWeatherBar
+				COUNTER=2400
+			else
+				COUNTER=$COUNTER - 1
+			fi
     done
 
 !
 }
 
-#Autostart apps
-wihack -tags /.*/ kupfer >/dev/null &
-wihack -tags 0 urxvt -e cmus &
-wihack -tags 0 pidgin >/dev/null &
-mkfifo /home/peter/.conky2wmii &
-conky &
+local_startup() {
+	#Set desktop background
+	xloadimage -onroot ~/billeder/walls/water.jpg
+
+	#Autostart apps
+	wihack -tags /.*/ kupfer >/dev/null &
+	wihack -tags 0 urxvt -e cmus &
+	mkfifo /home/peter/.conky2wmii &
+	conky &
+
+	#start and move pidgin friend list and kill kupfer window
+	bash -c '
+		wihack -tags 0 pidgin >/dev/null &
+		sleep 15
+		for i in $(wmiir ls /client | grep -Eo "^[[:alnum:]]*"); do
+			wmiir cat "/client/$i/props" | grep -q Pidgin:Pidgin:Venneliste && wmiir xwrite /tag/0/ctl send $i right 2>/dev/null
+			wmiir cat "/client/$i/props" | grep -q kupfer.py:Kupfer.py:Kupfer && wmiir xwrite /client/$i/ctl kill
+		done
+	' &
+}
