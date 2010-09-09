@@ -26,8 +26,8 @@ set showcmd "show the number of bytes marked in visual mode
 let spell_auto_type="tex,doc,mail"
 
 "General mappings
-nnoremap æ :cprev<CR>
-nnoremap ø :cnext<CR>
+nnoremap æ :bp!<CR>
+nnoremap ø :bn!<CR>
 nnoremap å :cclose<CR>
 noremap <C-q> <Esc>:confirm bd<CR>
 "alt-a decrease number under cursor
