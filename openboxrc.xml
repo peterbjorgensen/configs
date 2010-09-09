@@ -878,7 +878,7 @@
 
 			# end of the example
 			-->
-    <application name="terminator" class="Terminator">
+	<!--<application name="terminator" class="Terminator">
       <decor>no</decor>
       <shade>no</shade>
       <position force="yes">
@@ -894,6 +894,6 @@
       <skip_taskbar>yes</skip_taskbar>
       <fullscreen>no</fullscreen>
       <maximized>Horizontal</maximized>
-    </application>
+	</application>-->
   </applications>
 </openbox_config>

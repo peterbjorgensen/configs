@@ -6,7 +6,6 @@
 (xbindkey '(Control Alt Delete) "bash -c 'xtrlock'")
 (xbindkey '(Mod4 F4) "xfce4-session-logout")
 (xbindkey '(Alt F2) "gmrun")
-(xbindkey '(F12) "wmctrl -v -xr terminator -b toggle,hidden 2>&1 | awk '{if ($1==\"Using\") print $3;}' | xargs xwininfo -id | grep -q IsViewable && wmctrl -xa terminator ")
 
 ;; Top row
 (xbindkey '(Mod4 q) "wmctrl -r :ACTIVE: -b add,above")
