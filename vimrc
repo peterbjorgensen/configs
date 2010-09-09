@@ -14,12 +14,13 @@ set guioptions-=m
 set guioptions-=T
 set guioptions+=c "show simple dialogs in commandline
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
+set runtimepath+=/usr/share/vim,/usr/share/vimfiles,/usr/share/vim/vim72/
 set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
 set showcmd "show the number of bytes marked in visual mode
 
-let g:mapleader = '½'
-let g:maplocalleader = '½'
+"let g:mapleader = '½'
+"let g:maplocalleader = '½'
 
 "set spell
 let spell_auto_type="tex,doc,mail"
