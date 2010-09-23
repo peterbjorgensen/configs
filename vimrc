@@ -37,18 +37,6 @@ nnoremap á :normal! <C-x><CR>
 noremap ŋ  
 noremap ç 
 
-"numbers
-for i in range(1, 9) 
-	exe "map <silent> <A-" . i . "> :call BufPos_ActivateBuffer(" . i . ")<CR>"
-endfor
-exe "map <silent> <A-0> :call BufPos_ActivateBuffer(10)<CR>"
-exe "map <silent> <A-!> :call BufPos_ActivateBuffer(11)<CR>"
-exe 'map <silent> <A-"> :call BufPos_ActivateBuffer(12)<CR>'
-exe "map <silent> <A-#> :call BufPos_ActivateBuffer(13)<CR>"
-exe "map <silent> <A-¤> :call BufPos_ActivateBuffer(14)<CR>"
-exe "map <silent> <A-%> :call BufPos_ActivateBuffer(15)<CR>"
-exe "map <silent> <A-&> :call BufPos_ActivateBuffer(16)<CR>"
-
 "Completekey for ctags
 imap ½ <C-r>=CompleteKey("\<C-x>\<C-o>")<CR>
 
@@ -72,6 +60,10 @@ let g:miniBufExplTabWrap = 1
 hi MBEChanged guifg=red ctermbg=darkblue 
 hi MBEVisibleNormal guifg=blue ctermbg=darkblue
 hi MBEVisibleChanged guifg=red ctermbg=darkblue 
+
+"buftabs settings
+let g:buftabs_only_basename=1
+nnoremap <F5> :buffers<CR>:buffer<Space>
 
 set wildmenu "better menu completion
 set wildmode=list:longest
@@ -202,7 +194,7 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " Used funcitons
 function! UseFunctionHighlighting()
 	syntax match Function excludenl /\h\w*\s*(/me=e-1
-	highlight Function ctermfg=2 guifg=DarkCyan
+	highlight Function ctermfg=2 guifg=Cyan
 endfunction
 
 """""""""""""""""""""""""
@@ -228,7 +220,7 @@ autocmd BufReadPost main.log setlocal nobuflisted
 autocmd FileType tex call Autocmd_Tex()
 function! Autocmd_Tex()
 	set fileencoding=latin1
-	setlocal spell spelllang=da
+	setlocal spell spelllang=en
 	setlocal textwidth=80
 	nmap <F3> <Leader>ll<CR>
 	nmap <F4> :call Tex_SynctexSearch()<CR>
