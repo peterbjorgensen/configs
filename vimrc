@@ -320,6 +320,8 @@ function! GenerateTags(force)
     while getcwd() != "/"
 		if filereadable("tags")
 			let l:tagsfound = 1
+			let l:tagfile = fnameescape(getcwd() . "tags")
+			set tags+=l:tagfile
 			break
 		endif
         cd ..
@@ -329,8 +331,10 @@ function! GenerateTags(force)
 		if isdirectory(l:tagdir) 
 			execute "cd " . fnameescape(l:tagdir)
 			let l:tagsfound = 1
+			let l:tagfile = fnameescape(getcwd() . "tags")
+			set tags+=l:tagfile
 		else
-			echoe "b:tagdir not a valid directory!"
+			echo "b:tagdir not a valid directory!"
 		endif
 	endif
     if l:tagsfound == 1
