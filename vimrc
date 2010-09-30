@@ -26,10 +26,16 @@ set showcmd "show the number of bytes marked in visual mode
 let spell_auto_type="tex,doc,mail"
 
 "General mappings
+nnoremap <F5> :buffers<CR>:buffer<Space>
+nnoremap <C-t> :TlistToggle<CR>
 nnoremap æ :bp!<CR>
 nnoremap ø :bn!<CR>
 nnoremap å :cclose<CR>
 noremap <C-q> <Esc>:confirm bd<CR>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
 "alt-a decrease number under cursor
 nnoremap ª :normal! <C-x><CR>
 nnoremap á :normal! <C-x><CR>
@@ -63,10 +69,9 @@ hi MBEVisibleChanged guifg=red ctermbg=darkblue
 
 "buftabs settings
 let g:buftabs_only_basename=1
-nnoremap <F5> :buffers<CR>:buffer<Space>
 
 set wildmenu "better menu completion
-set wildmode=list:longest
+set wildmode=list:longest,full
 set tabstop=4
 set smartindent
 set ignorecase
