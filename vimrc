@@ -119,6 +119,7 @@ endfunction
 autocmd Filetype c,cpp call Autocmd_c()
 function! Autocmd_c()
 	setlocal omnifunc=LundComplete
+	setlocal colorcolumn=80
 	let b:lundCompleteTagsCmd = "ctags -f /tmp/tagslocal --c++-kinds=+pl ".
 		\"--language-force=c++ --fields=+iaS --extra=+q /tmp/tagslocal_source"
 	let b:lundCompleteOmnifunc = "omni#cpp#complete#Main"
