@@ -26,7 +26,7 @@ set showcmd "show the number of bytes marked in visual mode
 let spell_auto_type="tex,doc,mail"
 
 "General mappings
-nnoremap <F5> :buffers<CR>:buffer<Space>
+nnoremap <F6> :buffers<CR>:buffer<Space>
 nnoremap <C-t> :TlistToggle<CR>
 nnoremap æ :bp!<CR>
 nnoremap ø :bn!<CR>
@@ -259,6 +259,7 @@ let g:Tex_Env_minipage = "\
 		\\label{fig:<++>}\<CR>\
     \\end{minipage}\<CR>\
 \\end{figure}\<CR><++>"
+
 
 function! Tex_SynctexSearch()
     if &ft != 'tex'
