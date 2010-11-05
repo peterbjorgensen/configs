@@ -52,6 +52,7 @@ alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
 alias lc="cl"
 alias minicom="minicom -o"
+alias quakelive="LD_PRELOAD='/usr/lib/libpng12.so' /usr/bin/firefox www.quakelive.com"
 alias flub='woof'
 alias ltcrop='~/.scripts/ltcrop.sh'
 alias gta2='~/.scripts/gta2.sh'
