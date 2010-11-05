@@ -26,7 +26,7 @@ set showcmd "show the number of bytes marked in visual mode
 let spell_auto_type="tex,doc,mail"
 
 "General mappings
-nnoremap <F6> :buffers<CR>:buffer<Space>
+nnoremap <F8> :buffers<CR>:buffer<Space>
 nnoremap <C-t> :TlistToggle<CR>
 nnoremap æ :bp!<CR>
 nnoremap ø :bn!<CR>
@@ -239,7 +239,7 @@ endfunction
 let g:Tex_PromptedEnvironments = "flalign,flalign*,figure,minipage,table,tabular,enumerate,itemize"
 let g:Tex_Env_figure = "\
 \\begin{figure}[htbp]\<CR>\
-	\\centering\\includegraphics[width=<++>\\textwidth]{pics/<++>}\<CR>\
+	\\centering\\includegraphics[width=<++>\\textwidth]{<++>}\<CR>\
 	\\caption{<++>}\<CR>\
 	\\label{fig:<++>}\<CR>\
 \\end{figure}\<CR><++>"
@@ -248,13 +248,13 @@ let g:Tex_Env_minipage = "\
     \\centering\<CR>\
     \\begin{minipage}[c]{0.47\\textwidth}\<CR>\
 		\\centering\<CR>\
-		\\includegraphics[width=1\\textwidth]{pics/<++>}\<CR>\
+		\\includegraphics[width=1\\textwidth]{<++>}\<CR>\
         \\caption{<++>}\<CR>\
         \\label{fig:<++>}\<CR>\
 	\\end{minipage}\\hfill\<CR>\
 	\\begin{minipage}[c]{0.47\\textwidth}\<CR>\
 		\\centering\<CR>\
-		\\includegraphics[width=1\\textwidth]{pics/<++>}\<CR>\
+		\\includegraphics[width=1\\textwidth]{<++>}\<CR>\
         \\caption{<++>}\<CR>\
 		\\label{fig:<++>}\<CR>\
     \\end{minipage}\<CR>\
