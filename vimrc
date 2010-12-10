@@ -8,6 +8,7 @@ if hostname() == "archpad" "smaller font for laptop
 else
 	set mouse=a
 	set ttymouse=xterm2 "for scrolling with urxvt
+	set guifont=terminus
 endif
 set hlsearch
 set guioptions-=m
@@ -18,6 +19,7 @@ set runtimepath+=/usr/share/vim,/usr/share/vimfiles,/usr/share/vim/vim72/
 set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
 set showcmd "show the number of bytes marked in visual mode
+set swapsync= 	"dont fsync swap file on every change
 
 "let g:mapleader = '½'
 "let g:maplocalleader = '½'
