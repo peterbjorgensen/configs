@@ -47,7 +47,7 @@ updateStatusBars() {
 }
 
 updateWeatherBar() {
-	echo label $(curl --silent --connect-timeout 30 "http://xml.weather.yahoo.com/forecastrss?p=DAXX0002&u=c"| sed -n -e '/F<BR\|Low/!d; s/<.*>//;1,1 p;')| wmiir write /rbar/70weather
+	echo label $(curl --silent --connect-timeout 10 "http://xml.weather.yahoo.com/forecastrss?p=DAXX0002&u=c"| sed -n -e '/F<BR\|Low/!d; s/<.*>//;1,1 p;')| wmiir write /rbar/70weather
 }
 
 ### Events

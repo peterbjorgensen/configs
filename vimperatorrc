@@ -7,9 +7,6 @@ nnoremap J 12j
 nnoremap x 12j
 nnoremap c 12k
 nnoremap <BS> H
-set guioptions+=N
 set cpt=lbS
-set showstatuslinks=2
-set wildoptions=auto
 set nextpattern=\\bnæste\\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
 set previouspattern=\\bprev|previousi|forrige\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
