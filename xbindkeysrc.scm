@@ -4,8 +4,8 @@
 (xbindkey '(XF86AudioLowerVolume) "amixer -c 0 set Master playback 2-" )
 (xbindkey '(XF86AudioRaiseVolume) "amixer -c 0 set Master playback 2+" )
 (xbindkey '(Control Alt Delete) "bash -c 'xtrlock'")
+(xbindkey '(Control Alt Escape) "bash -c 'xkill'")
 (xbindkey '(Mod4 F4) "xfce4-session-logout")
-(xbindkey '(Alt F2) "gmrun")
 
 ;; Top row
 (xbindkey '(Mod4 q) "wmctrl -r :ACTIVE: -b add,above")
@@ -31,12 +31,12 @@
 (xbindkey '(Mod4 c) "bash -c 'cmus-remote --pause'")
 
 ;; Move/resize windows
-;(xbindkey '(Shift Mod4 i) "wmctrl -r ':ACTIVE:' -e '0,0,0,668,996'")
-;(xbindkey '(Shift Mod4 o) "wmctrl -r ':ACTIVE:' -e '0,670,0,1008,996'")
-;(xbindkey '(Shift Mod4 h) "wmctrl -r ':ACTIVE:' -e '0,0,507,668,489'")
-;(xbindkey '(Shift Mod4 j) "wmctrl -r ':ACTIVE:' -e '0,0,0,668,481'")
-;(xbindkey '(Shift Mod4 k) "wmctrl -r ':ACTIVE:' -e '0,670,0,1008,481'")
-;(xbindkey '(Shift Mod4 l) "wmctrl -r ':ACTIVE:' -e '0,670,507,1008,489'")
+(xbindkey '(Shift Mod4 i) "wmctrl -r ':ACTIVE:' -e '0,0,0,668,996'")
+(xbindkey '(Shift Mod4 o) "wmctrl -r ':ACTIVE:' -e '0,670,0,1008,996'")
+(xbindkey '(Shift Mod4 h) "wmctrl -r ':ACTIVE:' -e '0,0,507,668,489'")
+(xbindkey '(Shift Mod4 j) "wmctrl -r ':ACTIVE:' -e '0,0,0,668,481'")
+(xbindkey '(Shift Mod4 k) "wmctrl -r ':ACTIVE:' -e '0,670,0,1008,481'")
+(xbindkey '(Shift Mod4 l) "wmctrl -r ':ACTIVE:' -e '0,670,507,1008,489'")
 
 
 ;; Funny sounds

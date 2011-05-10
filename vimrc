@@ -144,7 +144,6 @@ let g:pydiction_location = '/usr/share/pydiction/complete-dict'
 
 function! Autocmd_Python()
 	setlocal expandtab
-	source /usr/share/vim/vimfiles/plugin/ropevim.vim
 	"ropevim settings
 	let g:ropevim_codeassist_maxfixes=10
 	let g:ropevim_guess_project=1
@@ -155,6 +154,7 @@ function! Autocmd_Python()
 		\("/usr/lib/python2.6/Tools/scripts/ptags.py $(find . -name '*.py')")
 	imap <buffer> ½ <C-R>=CompleteKey(
 		\"<C-v><C-R>=RopeCodeAssistInsertMode()<C-v><CR><C-v><C-p>")<CR>
+	source /usr/share/vim/vimfiles/plugin/ropevim.vim
 endfunction
 
 function! CustomCodeAssistInsertMode()
@@ -230,6 +230,7 @@ function! Autocmd_Tex()
 	set fileencoding=latin1
 	setlocal spell spelllang=en
 	setlocal textwidth=80
+	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a
 	nmap <F3> <Leader>ll<CR>
 	nmap <F4> :call Tex_SynctexSearch()<CR>
 	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')

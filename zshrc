@@ -40,6 +40,7 @@ esac
 export OOO_FORCE_DESKTOP=gnome
 export EDITOR='vim'
 export WORDCHARS='' #Treat all special chars as word separators
+export MATLABPATH='/home/peter/.matlab'
 
 #suffix-alias
 alias -s tex=$EDITOR
@@ -107,17 +108,17 @@ export http_proxy=http://proxy.es.aau.dk:3128
 }
 
 function hpupdate {
-	svn add --force ~/project/moder || { echo "--- ERROR ---"; return }
-	svn commit -m "hp update" ~/project/moder || { echo "--- ERROR ---"; return }
-	svn update /afs/ies.auc.dk/group/10gr416/public_html/svn
+	svn add --force ~/project/meetings || { echo "--- ERROR ---"; return }
+	svn commit -m "hp update" ~/project/meetings || { echo "--- ERROR ---"; return }
+	svn update /afs/ies.auc.dk/group/11gr651/public_html/svn/meetings
 }
 
 ########################
 
 #key bindings for compatibility with terminal emus
 # arrow up
-bindkey "\e[A" history-search-backward
-bindkey "\e[B" history-search-forward
+bindkey "\e[A" history-beginning-search-backward-end
+bindkey "\e[B" history-beginning-search-forward-end
 ####################### key bindings from archwiki
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
