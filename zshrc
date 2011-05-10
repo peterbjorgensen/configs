@@ -117,8 +117,8 @@ function hpupdate {
 
 #key bindings for compatibility with terminal emus
 # arrow up
-bindkey "\e[A" history-beginning-search-backward-end
-bindkey "\e[B" history-beginning-search-forward-end
+bindkey "\e[A" history-beginning-search-backward
+bindkey "\e[B" history-beginning-search-forward
 ####################### key bindings from archwiki
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
