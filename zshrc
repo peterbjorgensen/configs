@@ -113,12 +113,34 @@ function hpupdate {
 	svn update /afs/ies.auc.dk/group/11gr651/public_html/svn/meetings
 }
 
+function history-search-end {
+    integer ocursor=$CURSOR
+
+    if [[ $LASTWIDGET = history-beginning-search-*-end ]]; then
+      # Last widget called set $hbs_pos.
+      CURSOR=$hbs_pos
+    else
+      hbs_pos=$CURSOR
+    fi
+
+    if zle .${WIDGET%-end}; then
+      # success, go to end of line
+      zle .end-of-line
+    else
+      # failure, restore position
+      CURSOR=$ocursor
+      return 1
+    fi
+}
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
 ########################
 
 #key bindings for compatibility with terminal emus
 # arrow up
-bindkey "\e[A" history-beginning-search-backward
-bindkey "\e[B" history-beginning-search-forward
+bindkey "\e[A" history-beginning-search-backward-end
+bindkey "\e[B" history-beginning-search-forward-end
 ####################### key bindings from archwiki
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
