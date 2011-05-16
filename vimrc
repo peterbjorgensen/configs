@@ -5,6 +5,7 @@ source /usr/share/vimfiles/plugin/comments.vim
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
 	set guifont=terminus\ 10
+	set mouse=a
 else
 	set mouse=a
 	set ttymouse=xterm2 "for scrolling with urxvt
