@@ -228,15 +228,25 @@ autocmd BufReadPost main.log setlocal nobuflisted
 
 autocmd FileType tex call Autocmd_Tex()
 function! Autocmd_Tex()
+	set omnifunc=syntaxcomplete#Complete	
 	set fileencoding=latin1
 	setlocal spell spelllang=en
 	setlocal textwidth=80
 	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a
+	inoremap <buffer> ½h	<Esc>:call TexMacro("ac")<CR>a
 	nmap <F3> <Leader>ll<CR>
 	nmap <F4> :call Tex_SynctexSearch()<CR>
 	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')
 	call IMAP('HSS', '_|<++>|<++>','tex')
 	call IMAP('||', '|<++>|<++>','tex')
+endfunction
+
+function! TexMacro(macro)
+	normal a£
+	normal gea}
+	execute "normal Bi\\" . a:macro . "{"
+	call search("£")
+	normal s
 endfunction
 
 "environment macros
