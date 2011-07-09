@@ -151,11 +151,11 @@ function! Autocmd_Python()
 	let g:ropevim_vim_completion=1
 	let g:ropevim_enable_autoimport=1
 	let g:ropevim_extended_complete=1
-	call UseTags
-		\("/usr/lib/python2.6/Tools/scripts/ptags.py $(find . -name '*.py')")
-	imap <buffer> ½ <C-R>=CompleteKey(
-		\"<C-v><C-R>=RopeCodeAssistInsertMode()<C-v><CR><C-v><C-p>")<CR>
-	source /usr/share/vim/vimfiles/plugin/ropevim.vim
+	"call UseTags
+	"	\("/usr/lib/python2.6/Tools/scripts/ptags.py $(find . -name '*.py')")
+	"imap <buffer> ½ <C-R>=CompleteKey(
+	"	\"<C-v><C-R>=RopeCodeAssistInsertMode()<C-v><CR><C-v><C-p>")<CR>
+	"source /usr/share/vim/vimfiles/plugin/ropevim.vim
 endfunction
 
 function! CustomCodeAssistInsertMode()
@@ -235,18 +235,18 @@ function! Autocmd_Tex()
 	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a
 	inoremap <buffer> ½h	<Esc>:call TexMacro("ac")<CR>a
 	nmap <F3> <Leader>ll<CR>
-	nmap <F4> :call Tex_SynctexSearch()<CR>
+	nmap <F4> :call EVS_Sync()<CR>
 	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')
 	call IMAP('HSS', '_|<++>|<++>','tex')
 	call IMAP('||', '|<++>|<++>','tex')
 endfunction
 
 function! TexMacro(macro)
-	normal a£
-	normal gea}
-	execute "normal Bi\\" . a:macro . "{"
+	exec 'normal a £'
+	normal gEa}
+	execute "normal bi\\" . a:macro . "{"
 	call search("£")
-	normal s
+	normal Xs
 endfunction
 
 "environment macros
@@ -273,47 +273,6 @@ let g:Tex_Env_minipage = "\
 		\\label{fig:<++>}\<CR>\
     \\end{minipage}\<CR>\
 \\end{figure}\<CR><++>"
-
-
-function! Tex_SynctexSearch()
-    if &ft != 'tex'
-        echo "calling Tex_SynctexSearch from a non-tex file"
-        return
-    end
-
-    let curd = getcwd()
-    let xpos = col('.')
-    let ypos = line('.')
-
-    if exists('b:fragmentFile')
-        let mainfname = expand('%:p:t')
-        call Tex_CD(expand('%:p:h'))
-    else
-        let mainfname = Tex_GetMainFileName(':p:t')
-        call Tex_CD(Tex_GetMainFileName(':p:h'))
-    end
-
-    let targetfile = expand('%')
-    let pdffile = substitute(mainfname,'.tex','.pdf','')
-
-    let iopt = '"' . ypos . ':' . xpos . ':' . targetfile . '"'
-    let xopt = shellescape("echo %{page+1}:%{h}:%{v}:%{width}:%{height}",1)
-    let shellline = 'synctex view -i ' . iopt . ' -o ' . pdffile . ' -x ' . xopt
-    let result = system(shellline)
-    let rslt = split(result,':')
-    if len(rslt) == 5
-        "Synctex succeed
-        let page = remove(rslt,0)
-        let evrectopt = '"' . get(rslt,0) . ':' . get(rslt,1) . ':' . get(rslt,2) . ':' . '1' . '"'
-        echo 'SyncteX succeeded, launching evince'
-        "execute 'silent ! nohup evince --use-absolute-page --page-label ' . page . ' --highlight-rect ' . evrectopt . ' ' . pdffile . ' >/dev/null &'
-        execute 'silent ! nohup evince ' . pdffile . ' >/dev/null &'
-	else
-        "Synctex failed
-        echo 'SyncteX failed, viewing without synctex'
-        execute 'silent ! nohup evince ' . pdffile . ' >/dev/null &'
-    end
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Autocompletion, tags, etc
