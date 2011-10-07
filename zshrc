@@ -29,8 +29,12 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 #case-insensitive
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 #complete killall command
+zstyle ':completion:*:processes' command 'ps -ax'
+zstyle ':completion:*:processes-names' command 'ps -aeo comm='
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*' menu select
+zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:killall:*' menu select
-zstyle ':completion:*:killall:*' force-list always
 
 #Set terminal title to current working dir
 #everytime prompt is shown
