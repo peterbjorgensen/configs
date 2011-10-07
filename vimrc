@@ -4,7 +4,7 @@ syntax on
 source /usr/share/vimfiles/plugin/comments.vim
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
-	set guifont=terminus\ 10
+	set guifont=terminus\ 8
 	set mouse=a
 else
 	set mouse=a
@@ -21,6 +21,7 @@ set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
 set showcmd "show the number of bytes marked in visual mode
 set swapsync= 	"dont fsync swap file on every change
+set showbreak=¤
 
 "let g:mapleader = '½'
 "let g:maplocalleader = '½'
@@ -229,7 +230,7 @@ autocmd BufReadPost main.log setlocal nobuflisted
 autocmd FileType tex call Autocmd_Tex()
 function! Autocmd_Tex()
 	set omnifunc=syntaxcomplete#Complete	
-	set fileencoding=latin1
+	"set fileencoding=latin1
 	setlocal spell spelllang=en
 	setlocal textwidth=80
 	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a

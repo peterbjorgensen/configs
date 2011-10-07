@@ -28,6 +28,9 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 #case-insensitive
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+#complete killall command
+zstyle ':completion:*:*:killall:*' menu select
+zstyle ':completion:*:killall:*' force-list always
 
 #Set terminal title to current working dir
 #everytime prompt is shown
