@@ -72,6 +72,7 @@ alias latexmkrapport="ls *.latexmain | xargs latexmk -pdf -pvc -silent"
 alias ise='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/ise'
 alias impact='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/impact'
 alias skype64='ALSA_OSS_PCM_DEVICE="skype" aoss skype'
+alias n='urxvt 2>/dev/null &!'
 
 ###COLORS
 export GREP_COLOR="1;33"
