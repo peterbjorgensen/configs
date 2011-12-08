@@ -142,8 +142,6 @@ let OmniCpp_ShowPrototypeInAbbr = 1	" Show prototype in popup menu
 """"""""""""""""""""""""
 autocmd FileType python call Autocmd_Python()
 
-let g:pydiction_location = '/usr/share/pydiction/complete-dict'
-
 function! Autocmd_Python()
 	setlocal expandtab
 	"ropevim settings
@@ -157,6 +155,7 @@ function! Autocmd_Python()
 	"imap <buffer> ½ <C-R>=CompleteKey(
 	"	\"<C-v><C-R>=RopeCodeAssistInsertMode()<C-v><CR><C-v><C-p>")<CR>
 	"source /usr/share/vim/vimfiles/plugin/ropevim.vim
+	inoremap <buffer> # X#
 endfunction
 
 function! CustomCodeAssistInsertMode()
