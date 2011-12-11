@@ -9,6 +9,10 @@ URxvt.underlineColor:   yellow
 URxvt.font:             xft:Terminus:pixelsize=14:antialias=false
 URxvt.boldFont:         xft:Terminus:bold:pixelsize=14:antialias=false
 
+URxvt*scrollTtyOutput:      false
+URxvt*scrollWithBuffer:     true
+URxvt*scrollTtyKeypress:    true
+
 !scrollbar style - rxvt (default), plain, next, or xterm
 URxvt.scrollstyle: 		rxvt
 URxvt.saveLines: 		120000
