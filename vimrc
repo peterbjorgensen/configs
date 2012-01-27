@@ -229,6 +229,7 @@ autocmd BufReadPost main.log setlocal nobuflisted
 autocmd FileType tex call Autocmd_Tex()
 function! Autocmd_Tex()
 	set omnifunc=syntaxcomplete#Complete	
+	syntax spell toplevel
 	"set fileencoding=latin1
 	setlocal spell spelllang=en
 	setlocal textwidth=80
