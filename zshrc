@@ -73,6 +73,12 @@ alias ise='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilin
 alias impact='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/impact'
 alias skype64='ALSA_OSS_PCM_DEVICE="skype" aoss skype'
 alias n='urxvt 2>/dev/null &!'
+alias drp2='cvlc http://live-icy.gss.dr.dk:8000/A/A04H.mp3.m3u'
+alias drp3='cvlc http://live-icy.gss.dr.dk:8000/A/A05H.mp3.m3u'
+alias drp4nord='cvlc http://live-icy.gss.dr.dk:8000/A/A10H.mp3.m3u'
+alias drp6='cvlc http://live-icy.gss.dr.dk:8000/A/A29H.mp3.m3u'
+alias drp8='cvlc http://live-icy.gss.dr.dk:8000/A/A22H.mp3.m3u'
+alias drjazz drp8
 
 ###COLORS
 export GREP_COLOR="1;33"
