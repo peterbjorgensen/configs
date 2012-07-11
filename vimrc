@@ -1,7 +1,7 @@
 filetype plugin on
 filetype indent on
 syntax on
-source /usr/share/vimfiles/plugin/comments.vim
+source /usr/share/vim/vimfiles/plugin/comments.vim
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
 	set guifont=terminus\ 8
@@ -144,6 +144,8 @@ autocmd FileType python call Autocmd_Python()
 
 function! Autocmd_Python()
 	setlocal expandtab
+	set colorcolumn=80
+	highlight ColorColumn ctermbg=darkred guibg=darkgreen
 	"ropevim settings
 	let g:ropevim_codeassist_maxfixes=10
 	let g:ropevim_guess_project=1
