@@ -10,4 +10,5 @@ nnoremap <BS> H
 set cpt=lbS
 set nextpattern=\\bnæste\\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
 set previouspattern=\\bprev|previousi|forrige\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
+set titlestring=Firefox
 hi StatusLine color: black; background: transparent; font-weight: normal;

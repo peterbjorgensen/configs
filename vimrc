@@ -51,7 +51,7 @@ noremap ç 
 imap ½ <C-r>=CompleteKey("\<C-x>\<C-o>")<CR>
 
 "Cursor change color in console vim when entering/leaving insert mode
-if &term =~ "urxvt""
+if &term =~ "urxvt"
 	"Set the cursor white in cmd-mode and orange in insert mode
 	let &t_EI = "\<Esc>]12;green\x9c"
 	let &t_SI = "\<Esc>]12;orange\x9c"
@@ -237,7 +237,7 @@ function! Autocmd_Tex()
 	setlocal textwidth=80
 	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a
 	inoremap <buffer> ½h	<Esc>:call TexMacro("ac")<CR>a
-	nmap <F3> <Leader>ll<CR>
+	nmap <F3> :call Tex_CompileLatex()<CR>
 	nmap <F4> :call EVS_Sync()<CR>
 	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')
 	call IMAP('HSS', '_|<++>|<++>','tex')
@@ -253,7 +253,7 @@ function! TexMacro(macro)
 endfunction
 
 "environment macros
-let g:Tex_PromptedEnvironments = "flalign,flalign*,figure,minipage,table,tabular,enumerate,itemize"
+let g:Tex_PromptedEnvironments = "align,align*,figure,equation,minipage,table,tabular,enumerate,itemize"
 let g:Tex_Env_figure = "\
 \\begin{figure}[htbp]\<CR>\
 	\\centering\\includegraphics[width=<++>\\textwidth]{<++>}\<CR>\
