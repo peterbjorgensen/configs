@@ -6,10 +6,11 @@ colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
 	set guifont=terminus\ 8
 	set mouse=a
+	set ttymouse=xterm2 "for scrolling with urxvt
 else
 	set mouse=a
 	set ttymouse=xterm2 "for scrolling with urxvt
-	set guifont=terminus
+	set guifont=terminus\ 12
 endif
 set hlsearch
 set guioptions-=m
