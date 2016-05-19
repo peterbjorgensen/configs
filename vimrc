@@ -219,7 +219,7 @@ let g:Tex_Leader = '<'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_CompileRule_pdf = 'make figs; make figs; latexmk -silent -pdf $*'
 "let g:Tex_CompileRule_pdf = 'pdflatex --synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_MultipleCompileFormats = 'pdf'
+let g:Tex_MultipleCompileFormats = 'pdf'
 "let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_GotoError = 0
 let g:Tex_UseMakefile = 0

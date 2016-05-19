@@ -1,3 +1,5 @@
+nnoremap . gt
+nnoremap , gT
 nnoremap ø gt
 nnoremap æ gT
 nnoremap Ø ]]
@@ -12,3 +14,4 @@ set nextpattern=\\bnæste\\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
 set previouspattern=\\bprev|previousi|forrige\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
 set titlestring=Firefox
 hi StatusLine color: black; background: transparent; font-weight: normal;
+set gui=addons,nobookmarks,nomenu,nonavigation,tabs

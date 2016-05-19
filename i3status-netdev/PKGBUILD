@@ -1,5 +1,5 @@
 pkgname=i3status-netdev-git
-pkgver=20130118
+pkgver=20151025
 pkgrel=1
 pkgdesc="Generates status bar to use with dzen2 or wmii. Patched to use /proc/net/dev on linux to show bandwidth use"
 arch=('i686' 'x86_64')

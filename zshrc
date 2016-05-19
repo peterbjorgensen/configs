@@ -80,6 +80,7 @@ alias drp6='cvlc http://live-icy.gss.dr.dk:8000/A/A29H.mp3.m3u'
 alias drp8='cvlc http://live-icy.gss.dr.dk:8000/A/A22H.mp3.m3u'
 alias drjazz='drp8'
 alias koqx='cvlc http://www.koqx.com/koqx.m3u'
+alias dentungeradio='cvlc http://dentungeradio.dk/popup_player/dtr_stream.m3u'
 
 ###COLORS
 export GREP_COLOR="1;33"

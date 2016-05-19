@@ -149,18 +149,48 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
+set $Locker i3lock -i /home/peter/pics/hawaii.png && sleep 1
+
+set $mode_system System (l) lock, (s) suspend, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym Mod4+Delete mode "$mode_system"
+
+# General keybinds
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1b.0.analog-stereo toggle
+bindsym Mod4+t exec thunar
+bindsym Mod4+Escape exec --no-startup-id i3lock -i /home/peter/pics/hawaii.png
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	output LVDS1
-	status_command i3status -c ~/.i3/i3status.conf
+	output eDP1
+	status_command i3status -c ~/.config/i3status/config
 	position bottom
-	tray_output LVDS1
+	tray_output eDP1
+}
+bar {
+	output DP2
+	status_command i3status -c ~/.config/i3status/config
+	position bottom
 }
 
 # Startup programs
 exec nm-applet
-exec pidgin
 exec kupfer
-exec xbindkeys
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec feh --bg-center ~/pics/chuli_wall.jpg
