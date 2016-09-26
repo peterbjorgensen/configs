@@ -1,0 +1,11 @@
+# These files enables the use of æøå on UK English keyboard layout
+# Using alt-gr:
+# a is mapped to æ
+# s is mapped to ø
+# w is mapped to å
+
+# Copy files and overwrite system files
+cp *.lst /usr/share/X11/xkb/rules
+cp *.xml /usr/share/X11/xkb/rules
+cp gb /usr/share/X11/xkb/symbols
+cp 10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
