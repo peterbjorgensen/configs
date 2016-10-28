@@ -1,6 +1,7 @@
 filetype plugin on
 filetype indent on
 syntax on
+set runtimepath+=/usr/share/vim/vimfiles
 source /usr/share/vim/vimfiles/plugin/comments.vim
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
@@ -17,12 +18,12 @@ set guioptions-=m
 set guioptions-=T
 set guioptions+=c "show simple dialogs in commandline
 set directory=/home/peter/.vim/swp,.,/tmp,/var/tmp
-set runtimepath+=/usr/share/vim,/usr/share/vimfiles,/usr/share/vim/vim72/
 set backupdir=~/.vim/backup "backup dir
 set incsearch "start searching as you type
 set showcmd "show the number of bytes marked in visual mode
 set swapsync= 	"dont fsync swap file on every change
 set showbreak=¤
+set t_Co=256 "Use 256 colors instead of 8 or 16
 
 "let g:mapleader = '½'
 "let g:maplocalleader = '½'
@@ -215,9 +216,9 @@ endfunction
 set grepprg=egrep\ -nH\ $*
 let g:tex_flavor='latex'
 let g:Tex_FormatDependency = 'pdf'
-let g:Tex_Leader = '<'
+let g:Tex_Leader = '`'
 let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_pdf = 'make figs; make figs; latexmk -silent -pdf $*'
+let g:Tex_CompileRule_pdf = 'make figs; make figs; latexmk -pdf -silent -latexoption=--synctex=1 $*'
 "let g:Tex_CompileRule_pdf = 'pdflatex --synctex=1 -interaction=nonstopmode $*'
 let g:Tex_MultipleCompileFormats = 'pdf'
 "let g:Tex_ViewRule_pdf = 'evince'

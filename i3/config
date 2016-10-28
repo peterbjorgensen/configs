@@ -194,6 +194,6 @@ bar {
 exec nm-applet
 exec kupfer
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec xmodmap -e "keycode  25 = w W w W aring Aring aring Aring"
-exec xmodmap -e "keycode  39 = s S s S oslash Oslash oslash Oslash"
+#exec xmodmap -e "keycode  25 = w W w W aring Aring aring Aring"
+#exec xmodmap -e "keycode  39 = s S s S oslash Oslash oslash Oslash"
 #exec feh --bg-center ~/pics/chuli_wall.jpg
