@@ -64,7 +64,7 @@ bindsym Mod4+f fullscreen
 # change container layout (stacked, tabbed, default)
 bindsym Mod4+q layout stacking
 bindsym Mod4+w layout tabbed
-bindsym Mod4+e layout default
+bindsym Mod4+e layout toggle split
 
 # toggle tiling / floating
 bindsym Mod4+Shift+space floating toggle
@@ -117,30 +117,30 @@ mode "resize" {
         # when pressing left, the window is resized so that it has
         # more space on its left
 
-        bindsym h               resize shrink left 10 px or 10 ppt
-        bindsym Shift+h         resize grow   left 10 px or 10 ppt
+        bindsym h               resize shrink left 5 px or 5 ppt
+        bindsym Shift+h         resize grow   left 5 px or 5 ppt
 
-        bindsym j               resize shrink down 10 px or 10 ppt
-        bindsym Shift+j         resize grow   down 10 px or 10 ppt
+        bindsym j               resize shrink down 5 px or 5 ppt
+        bindsym Shift+j         resize grow   down 5 px or 5 ppt
 
-        bindsym k               resize shrink up 10 px or 10 ppt
-        bindsym Shift+k         resize grow   up 10 px or 10 ppt
+        bindsym k               resize shrink up 5 px or 5 ppt
+        bindsym Shift+k         resize grow   up 5 px or 5 ppt
 
-        bindsym l       resize shrink right 10 px or 10 ppt
-        bindsym Shift+l resize grow   right 10 px or 10 ppt
+        bindsym l       resize shrink right 5 px or 5 ppt
+        bindsym Shift+l resize grow   right 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left        resize shrink left 10 px or 10 ppt
-        bindsym Shift+Left  resize grow   left 10 px or 10 ppt
+        bindsym Left        resize shrink left 5 px or 5 ppt
+        bindsym Shift+Left  resize grow   left 5 px or 5 ppt
 
-        bindsym Down        resize shrink down 10 px or 10 ppt
-        bindsym Shift+Down  resize grow   down 10 px or 10 ppt
+        bindsym Down        resize shrink down 5 px or 5 ppt
+        bindsym Shift+Down  resize grow   down 5 px or 5 ppt
 
-        bindsym Up          resize shrink up 10 px or 10 ppt
-        bindsym Shift+Up    resize grow   up 10 px or 10 ppt
+        bindsym Up          resize shrink up 5 px or 5 ppt
+        bindsym Shift+Up    resize grow   up 5 px or 5 ppt
 
-        bindsym Right       resize shrink right 10 px or 10 ppt
-        bindsym Shift+Right resize grow   right 10 px or 10 ppt
+        bindsym Right       resize shrink right 5 px or 5 ppt
+        bindsym Shift+Right resize grow   right 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -188,4 +188,6 @@ bar {
 exec nm-applet
 exec kupfer
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec feh --bg-center ~/pics/chuli_wall.jpg
+#exec xmodmap -e "keycode  25 = w W w W aring Aring aring Aring"
+#exec xmodmap -e "keycode  39 = s S s S oslash Oslash oslash Oslash"
+#exec feh --bg-center ~/pics/chuli_wall.jpg
