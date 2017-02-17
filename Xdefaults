@@ -6,8 +6,8 @@ URxvt.background:       black
 URxvt.foreground:       white
 URxvt.cursorColor:      green
 URxvt.underlineColor:   yellow
-URxvt.font:             xft:Terminus:pixelsize=14:antialias=false
-URxvt.boldFont:         xft:Terminus:bold:pixelsize=14:antialias=false
+URxvt.font:             xft:xos4 Terminus:pixelsize=14:antialias=false
+URxvt.boldFont:         xft:xos4 Terminus:bold:pixelsize=14:antialias=false
 
 URxvt*scrollTtyOutput:      false
 URxvt*scrollWithBuffer:     true

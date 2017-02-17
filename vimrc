@@ -11,7 +11,7 @@ if hostname() == "archpad" "smaller font for laptop
 else
 	set mouse=a
 	set ttymouse=xterm2 "for scrolling with urxvt
-	set guifont=terminus\ 12
+	set guifont=xos4\ Terminus\ 12
 endif
 set hlsearch
 set guioptions-=m
