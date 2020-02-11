@@ -1,55 +1,51 @@
 pkgname=i3status-netdev-git
-pkgver=20151025
+pkgver=20200211
 pkgrel=1
 pkgdesc="Generates status bar to use with dzen2 or wmii. Patched to use /proc/net/dev on linux to show bandwidth use"
 arch=('i686' 'x86_64')
 url="http://i3.zekjur.net/i3status/"
 license=('BSD')
-depends=('wireless_tools' 'confuse' 'alsa-lib')
-optdepends=("dzen2-svn: As statusbar, dzen2 stable doesn't support -dock yet.")
-makedepends=('git' 'pkgconfig' 'asciidoc')
+depends=('confuse' 'alsa-lib' 'yajl' 'libpulse' 'libnl')
+makedepends=('git' 'pkgconfig' 'asciidoc' 'xmlto')
 options=('docs')
 install=i3status.install
 conflicts=('i3status')
 provides=('i3status')
+source=(git+https://github.com/peterbjorgensen/i3status-netdev)
+sha1sums=('SKIP')
 
-_gitroot="file:///home/peter/kodesjov/i3status"
-_gitroot="https://github.com/peder2tm/i3status-netdev.git"
 _gitname="i3status-netdev"
 
+pkgver() {
+  cd "$srcdir/$_gitname"
+  git log -1 --date=format:"%Y%m%d" --format="%ad"
+}
+
 build() {
-  cd "${srcdir}"
-  msg "Connecting to GIT server...."
+  cd "$_gitname"
 
-  if [ -d ${_gitname} ] ; then
-    cd ${_gitname} && git pull origin
-    msg "The local files are updated."
-  else
-    git clone -b netdev ${_gitroot}
-  fi
+  autoreconf --force --install
 
-  msg "GIT checkout done or server timeout"
-  msg "Starting make..."
+  rm -rf build/
+  mkdir -p build && cd build/
 
-  rm -rf "${srcdir}/${_gitname}-build"
-  cp -r "${srcdir}/${_gitname}" "${srcdir}/${_gitname}-build"
-  cd "${srcdir}/${_gitname}-build"
+  ../configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-sanitizers
 
-  # Remove comment if you want to use i3status with wmii
-  # sed -i "s/CFLAGS+=-DDZEN/#CFLAGS+=-DDZEN/g" Makefile
-
-  make
+  # See https://lists.archlinux.org/pipermail/arch-dev-public/2013-April/024776.html
+  make CPPFLAGS+="-U_FORTIFY_SOURCE"
 }
 
 package() {
-  cd "${srcdir}/${_gitname}-build"
+  cd "$_gitname"
+  cd build/
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR="$pkgdir/" install
 
-  install -Dm644 LICENSE \
+  install -Dm644 ../LICENSE \
     ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
-
-  make clean
 }
 
 # vim:set ts=2 sw=2 et:
