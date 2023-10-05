@@ -12,6 +12,7 @@ HISTFILESIZE=1000000000
 HISTSIZE=10000000
 SAVEHIST=100000000
 HISTFILE=~/.zsh_history
+PATH=$PATH:~/.local/bin
 setopt inc_append_history
 setopt hist_find_no_dups
 setopt hist_no_functions
@@ -35,19 +36,21 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:kill:*' menu select
 zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:killall:*' menu select
+# Just complete local files in git completion, otherwise it is too slow
+__git_files () { 
+    _wanted files expl 'local files' _files  }
 
 #Set terminal title to current working dir
 #everytime prompt is shown
 case $TERM in
-	    xterm*|*rxvt*)
+	    alacritty|xterm*|*rxvt*|st*)
 	precmd () {print -Pn "\e]0; %~\a"}
 esac
 
 #Environment variables
 export OOO_FORCE_DESKTOP=gnome
-export EDITOR='vim'
+export EDITOR='nvim'
 export WORDCHARS='' #Treat all special chars as word separators
-export MATLABPATH='/home/peter/.matlab'
 
 #suffix-alias
 alias -s tex=$EDITOR
@@ -60,27 +63,11 @@ alias -s txt=$EDITOR
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
 alias lc="cl"
-alias minicom="minicom -o"
-alias quakelive="LD_PRELOAD='/usr/lib/libpng12.so' /usr/bin/firefox www.quakelive.com"
 alias flub='woof'
-alias ltcrop='~/.scripts/ltcrop.sh'
-alias gta2='~/.scripts/gta2.sh'
-alias aaussh='ssh pejor@skoda.es.aau.dk -X'
-alias lundssh='ssh guest@lundgaard.dyndns.dk'
-alias hdapsfixx='~/.scripts/hdaps.sh'
 alias latexmkrapport="ls *.latexmain | xargs latexmk -pdf -pvc -silent"
-alias ise='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/ise'
-alias impact='LD_PRELOAD=/home/peter/Desktop/usb-driver/libusb-driver.so /opt/xilinx/11.1/ISE/bin/lin/impact'
-alias skype64='ALSA_OSS_PCM_DEVICE="skype" aoss skype'
-alias n='urxvt 2>/dev/null &!'
-alias drp2='cvlc http://live-icy.gss.dr.dk:8000/A/A04H.mp3.m3u'
-alias drp3='cvlc http://live-icy.gss.dr.dk:8000/A/A05H.mp3.m3u'
-alias drp4nord='cvlc http://live-icy.gss.dr.dk:8000/A/A10H.mp3.m3u'
-alias drp6='cvlc http://live-icy.gss.dr.dk:8000/A/A29H.mp3.m3u'
-alias drp8='cvlc http://live-icy.gss.dr.dk:8000/A/A22H.mp3.m3u'
-alias drjazz='drp8'
-alias koqx='cvlc http://www.koqx.com/koqx.m3u'
-alias dentungeradio='cvlc http://dentungeradio.dk/popup_player/dtr_stream.m3u'
+alias n='alacritty 2>/dev/null &!'
+alias nvimdiff='nvim -d'
+alias vim='nvim'
 
 ###COLORS
 export GREP_COLOR="1;33"
@@ -102,31 +89,6 @@ function cl () {
    else
       cd "$*" && ll
    fi
-}
-function svnci {
-    svn up && svn ci -m "${*}"
-    svn stat
-}
-function gca {
-    git commit -a -m "${*}"
-}
-
-function mleps {
-sed -i -e 's/\\303\\246/\\346/g' -e 's/\\303\\206/\\306/g' \
-        -e 's/\\303\\270/\\370/g' -e 's/\\303\\230/\\330/g' \
-        -e 's/\\303\\245/\\345/g' -e 's/\\303\\205/\\305/g' "$1" && \
-    epstopdf "$1" && rm "$1"
-}
-
-
-function aauproxy {
-export http_proxy=http://proxy.es.aau.dk:3128
-}
-
-function hpupdate {
-	svn add --force ~/project/meetings || { echo "--- ERROR ---"; return }
-	svn commit -m "hp update" ~/project/meetings || { echo "--- ERROR ---"; return }
-	svn update /afs/ies.auc.dk/group/11gr651/public_html/svn/meetings
 }
 
 function history-search-end {
@@ -180,7 +142,15 @@ bindkey "\eOF" end-of-line
 # for freebsd console
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
+# For termite (VTE based)
+bindkey "\e[1;3D" backward-word # alt-right
+bindkey "\e[1;3C" forward-word # alt-left
+bindkey "\e[1;5D" emacs-backward-word # ctrl-left
+bindkey "\e[1;5C" emacs-forward-word # ctrl-right
 
 ##############################
 
-
+# High dpi settings
+# QT
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_ENABLE_HIGHDPI_SCALING=1

@@ -11,7 +11,8 @@
 
 # font for window titles. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso10646-1
+#font -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso10646-1
+font pango:Terminus 18px
 
 default_orientation vertical
 workspace_layout stacking
@@ -20,7 +21,11 @@ workspace_layout stacking
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod4+Return exec urxvt
+bindsym Mod4+Return exec alacritty
+# start terminal in current working directory
+#bindsym Mod4+Shift+Return exec termite -d "`xcwd`"
+#bindsym Mod4+Shift+Return exec termite -d '`xtitle | pcregrep -io1 "\((.*)\) - NVIM"`'
+bindsym Mod4+Shift+Return exec ~/.scripts/open_in_cwd.sh
 
 # kill focused window
 bindsym Mod4+Shift+q kill
@@ -102,6 +107,9 @@ bindsym Mod4+Shift+8 move workspace 8
 bindsym Mod4+Shift+9 move workspace 9
 bindsym Mod4+Shift+0 move workspace 10
 
+bindsym Mod4+Shift+M move workspace to output right
+bindsym Mod4+Shift+N move workspace to output left
+
 # reload the configuration file
 bindsym Mod4+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -117,30 +125,30 @@ mode "resize" {
         # when pressing left, the window is resized so that it has
         # more space on its left
 
-        bindsym h               resize shrink left 5 px or 5 ppt
-        bindsym Shift+h         resize grow   left 5 px or 5 ppt
+        bindsym h               resize grow 	left 5 px or 5 ppt
+        bindsym Shift+h         resize shrink   left 5 px or 5 ppt
 
-        bindsym j               resize shrink down 5 px or 5 ppt
-        bindsym Shift+j         resize grow   down 5 px or 5 ppt
+        bindsym j               resize grow 	down 5 px or 5 ppt
+        bindsym Shift+j         resize shrink   down 5 px or 5 ppt
 
-        bindsym k               resize shrink up 5 px or 5 ppt
-        bindsym Shift+k         resize grow   up 5 px or 5 ppt
+        bindsym k               resize grow 	up 5 px or 5 ppt
+        bindsym Shift+k         resize shrink   up 5 px or 5 ppt
 
-        bindsym l       resize shrink right 5 px or 5 ppt
-        bindsym Shift+l resize grow   right 5 px or 5 ppt
+        bindsym l       	resize grow 	right 5 px or 5 ppt
+        bindsym Shift+l 	resize shrink   right 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left        resize shrink left 5 px or 5 ppt
-        bindsym Shift+Left  resize grow   left 5 px or 5 ppt
+        bindsym Left        resize grow 	left 5 px or 5 ppt
+        bindsym Shift+Left  resize shrink   left 5 px or 5 ppt
 
-        bindsym Down        resize shrink down 5 px or 5 ppt
-        bindsym Shift+Down  resize grow   down 5 px or 5 ppt
+        bindsym Down        resize grow 	down 5 px or 5 ppt
+        bindsym Shift+Down  resize shrink   down 5 px or 5 ppt
 
-        bindsym Up          resize shrink up 5 px or 5 ppt
-        bindsym Shift+Up    resize grow   up 5 px or 5 ppt
+        bindsym Up          resize grow 	up 5 px or 5 ppt
+        bindsym Shift+Up    resize shrink   up 5 px or 5 ppt
 
-        bindsym Right       resize shrink right 5 px or 5 ppt
-        bindsym Shift+Right resize grow   right 5 px or 5 ppt
+        bindsym Right       resize grow 	right 5 px or 5 ppt
+        bindsym Shift+Right resize shrink   right 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -149,7 +157,7 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-set $Locker i3lock -i /home/peter/pics/hawaii.png && sleep 1
+set $Locker i3lock && sleep 1
 
 set $mode_system System (l) lock, (s) suspend, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
@@ -168,14 +176,14 @@ bindsym Mod4+Delete mode "$mode_system"
 # General keybinds
 #bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 #bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec --no-startup-id /home/peter/kodesjov/backlight/backlight --dec=100
-bindsym XF86MonBrightnessUp   exec --no-startup-id /home/peter/kodesjov/backlight/backlight --inc=100
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
+bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl s +10%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1b.0.analog-stereo toggle
 bindsym Mod4+t exec thunar
-bindsym Mod4+Escape exec --no-startup-id i3lock -i /home/peter/pics/hawaii.png
+bindsym Mod4+Escape exec --no-startup-id i3lock
 
 bindsym Mod4+Prior exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym Mod4+Next  exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false && pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -192,7 +200,5 @@ bar {
 # Startup programs
 exec nm-applet
 exec kupfer
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec xmodmap -e "keycode  25 = w W w W aring Aring aring Aring"
-#exec xmodmap -e "keycode  39 = s S s S oslash Oslash oslash Oslash"
-#exec feh --bg-center ~/pics/chuli_wall.jpg
+exec /usr/lib/xfce4/notifyd/xfce4-notifyd
+exec xautolock -time 5 -locker i3lock

@@ -1,8 +1,10 @@
 filetype plugin on
 filetype indent on
+execute pathogen#infect()
 syntax on
 set runtimepath+=/usr/share/vim/vimfiles
 source /usr/share/vim/vimfiles/plugin/comments.vim
+let g:base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme darkZ
 if hostname() == "archpad" "smaller font for laptop
 	set guifont=terminus\ 8
@@ -11,7 +13,7 @@ if hostname() == "archpad" "smaller font for laptop
 else
 	set mouse=a
 	set ttymouse=xterm2 "for scrolling with urxvt
-	set guifont=terminus\ 12
+	set guifont=xos4\ Terminus\ 12
 endif
 set hlsearch
 set guioptions-=m
@@ -24,6 +26,8 @@ set showcmd "show the number of bytes marked in visual mode
 set swapsync= 	"dont fsync swap file on every change
 set showbreak=¤
 set t_Co=256 "Use 256 colors instead of 8 or 16
+set listchars=tab:>- "Highlight tabs
+highlight Cursor guifg=black guibg=green
 
 "let g:mapleader = '½'
 "let g:maplocalleader = '½'
@@ -42,6 +46,8 @@ nnoremap <C-k> <C-w><C-k>
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
+"Change working directory to directory of current buffer
+nnoremap ,cd :execute "cd" expand("%:h")<CR>:pwd<CR>
 "alt-a decrease number under cursor
 nnoremap ª :normal! <C-x><CR>
 nnoremap á :normal! <C-x><CR>
@@ -240,7 +246,7 @@ function! Autocmd_Tex()
 	inoremap <buffer> ½2	<Esc>:call TexClosePrev(0)<CR>a
 	inoremap <buffer> ½h	<Esc>:call TexMacro("ac")<CR>a
 	nmap <F3> :call Tex_CompileLatex()<CR>
-	nmap <F4> :call EVS_Sync()<CR>
+	nmap <F4> :call SVED_Sync()<CR>
 	call IMAP('HSI', '\SI{<++>}{<++>}<++>', 'tex')
 	call IMAP('HSS', '_|<++>|<++>','tex')
 	call IMAP('||', '|<++>|<++>','tex')

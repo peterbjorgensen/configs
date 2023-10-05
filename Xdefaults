@@ -1,4 +1,4 @@
-URxvt.termName:			xterm
+!URxvt.termName:			xterm
 URxvt.scrollBar: 		true
 URxvt.scrollBar_right: 	true
 URxvt.buffered:         true
@@ -6,8 +6,10 @@ URxvt.background:       black
 URxvt.foreground:       white
 URxvt.cursorColor:      green
 URxvt.underlineColor:   yellow
-URxvt.font:             xft:Terminus:pixelsize=14:antialias=false
-URxvt.boldFont:         xft:Terminus:bold:pixelsize=14:antialias=false
+URxvt.font:             xft:xos4 Terminus:pixelsize=14:antialias=false
+URxvt.boldFont:         xft:xos4 Terminus:bold:pixelsize=14:antialias=false
+!URxvt.font:             xft:xos4 Terminus:pixelsize=24:antialias=false
+!URxvt.boldFont:         xft:xos4 Terminus:bold:pixelsize=24:antialias=false
 
 URxvt*scrollTtyOutput:      false
 URxvt*scrollWithBuffer:     true

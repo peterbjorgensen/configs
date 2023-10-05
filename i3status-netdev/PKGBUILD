@@ -1,5 +1,5 @@
 pkgname=i3status-netdev-git
-pkgver=20200211
+pkgver=20200212
 pkgrel=1
 pkgdesc="Generates status bar to use with dzen2 or wmii. Patched to use /proc/net/dev on linux to show bandwidth use"
 arch=('i686' 'x86_64')
@@ -35,7 +35,7 @@ build() {
     --disable-sanitizers
 
   # See https://lists.archlinux.org/pipermail/arch-dev-public/2013-April/024776.html
-  make CPPFLAGS+="-U_FORTIFY_SOURCE"
+  make CFLAGS=""
 }
 
 package() {
