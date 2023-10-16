@@ -1,3 +1,6 @@
+# Add user generated completion (for example for poetry)
+fpath+=~/.zfunc
+
 autoload -U promptinit
 autoload -U compinit
 compinit
@@ -12,7 +15,7 @@ HISTFILESIZE=1000000000
 HISTSIZE=10000000
 SAVEHIST=100000000
 HISTFILE=~/.zsh_history
-PATH=$PATH:~/.local/bin
+#PATH=$PATH:~/.local/bin
 setopt inc_append_history
 setopt hist_find_no_dups
 setopt hist_no_functions

@@ -12,13 +12,16 @@
 # font for window titles. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 #font -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso10646-1
-font pango:Terminus 18px
+font pango:Terminus 10
 
 default_orientation vertical
 workspace_layout stacking
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
+
+# enable window icons for all windows
+for_window [all] title_window_icon on
 
 # start a terminal
 bindsym Mod4+Return exec alacritty
@@ -201,4 +204,6 @@ bar {
 exec nm-applet
 exec kupfer
 exec /usr/lib/xfce4/notifyd/xfce4-notifyd
-exec xautolock -time 5 -locker i3lock
+#exec xautolock -time 5 -locker i3lock
+exec autorandr --change
+exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer normal 600 'i3lock' ''
