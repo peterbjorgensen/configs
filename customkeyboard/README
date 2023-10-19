@@ -9,3 +9,12 @@ cp *.lst /usr/share/X11/xkb/rules
 cp *.xml /usr/share/X11/xkb/rules
 cp gb /usr/share/X11/xkb/symbols
 cp 10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
+
+# Add the following to /etc/pacman.conf
+# Do not include leading slash
+NoUpgrade   = usr/share/X11/xkb/rules/base.lst
+NoUpgrade   = usr/share/X11/xkb/rules/base.xml
+NoUpgrade   = usr/share/X11/xkb/rules/evdev.lst
+NoUpgrade   = usr/share/X11/xkb/rules/evdev.xml
+NoUpgrade   = usr/share/X11/xkb/symbols/gb
+
