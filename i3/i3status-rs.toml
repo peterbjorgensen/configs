@@ -1,0 +1,66 @@
+icons_format = "{icon}"
+
+[theme]
+#theme = "solarized-dark"
+theme = "semi-native"
+[theme.overrides]
+#idle_bg = "#123456"
+#idle_fg = "#abcdef"
+idle_fg = "#00a000"
+
+[icons]
+icons = "awesome6"
+#[icons.overrides]
+#bat = ["|E|", "|_|", "|=|", "|F|"]
+#bat_charging = "|^| "
+
+[[block]]
+block = "net"
+device = "^w"
+format = "$icon {$signal_strength $ssid $bitrate $frequency|Wired connection} via $device ^icon_net_down $speed_down.eng(prefix:K) ^icon_net_up $speed_up.eng(prefix:K) $ip"
+
+[[block]]
+block = "net"
+device = "^e"
+format = "$icon ^icon_net_down $speed_down.eng(prefix:K) ^icon_net_up $speed_up.eng(prefix:K) $ip"
+
+[[block]]
+block = "temperature"
+
+[[block]]
+block = "cpu"
+
+[[block]]
+block = "load"
+format = " $icon $1m.eng(w:4)"
+interval = 1
+
+[[block]]
+block = "disk_space"
+path = "/"
+info_type = "available"
+alert_unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+format = " $icon root: $available.eng(w:2) "
+
+[[block]]
+block = "memory"
+format = " $icon $mem_used.eng(prefix:Mi)/$mem_total.eng(prefix:Mi) "
+format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
+
+[[block]]
+block = "battery"
+format = " $icon $percentage "
+
+[[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%a %d/%m %R') "
