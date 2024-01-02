@@ -208,6 +208,6 @@ exec kupfer
 #exec /usr/lib/xfce4/notifyd/xfce4-notifyd
 #exec xautolock -time 5 -locker i3lock
 #exec autorandr --change
-exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer normal 600 'i3lock' ''
+exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 600 'i3lock' ''
 # Start everything with autostart entries
 exec dex --autostart

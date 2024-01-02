@@ -6,7 +6,7 @@ theme = "semi-native"
 [theme.overrides]
 #idle_bg = "#123456"
 #idle_fg = "#abcdef"
-idle_fg = "#00a000"
+idle_fg = "#dcdcdc"
 
 [icons]
 icons = "awesome6"
@@ -29,6 +29,7 @@ block = "temperature"
 
 [[block]]
 block = "cpu"
+format = " $icon $utilization"
 
 [[block]]
 block = "load"

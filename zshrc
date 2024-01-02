@@ -8,7 +8,17 @@ promptinit
 
 #Misc settings
 bindkey -e #use emacs keybindings
-prompt adam2
+#prompt adam2
+plugins=(
+	git
+	virtualenv
+)
+#ZSH_THEME="candy"
+ZSH_THEME="amuse_custom"
+#ZSH_THEME="robbyrussell"
+source /usr/share/oh-my-zsh/oh-my-zsh.sh
+#VIRTUAL_ENV_DISABLE_PROMPT=0
+#unset VIRTUAL_ENV_DISABLE_PROMPT
 
 #### History options
 HISTFILESIZE=1000000000
@@ -71,9 +81,10 @@ alias latexmkrapport="ls *.latexmain | xargs latexmk -pdf -pvc -silent"
 alias n='alacritty 2>/dev/null &!'
 alias nvimdiff='nvim -d'
 alias vim='nvim'
+alias conda-init="[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh"
 
 ###COLORS
-export GREP_COLOR="1;33"
+export GREP_COLORS="1;33"
 eval `dircolors -b`
 # Colored manpage
 export LESS_TERMCAP_mb=$'\E[01;31m'
